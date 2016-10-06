@@ -1,6 +1,9 @@
 vcl 4.0;
+import std;
+import directors;
+import dynamic;
 
-backend default {
-  .host = "web";
-  .port = "80";
-}
+include "acls.vcl";
+include "backends.vcl";
+include "subs.vcl";"
+include "logic.vcl";

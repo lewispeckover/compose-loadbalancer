@@ -1,21 +1,30 @@
-varnish:
-  image: lewispeckover/varnish:latest
-  command: -F -a :80 -a 127.0.0.1:81,PROXY -f /etc/varnish/default.vcl -T 127.0.0.1:6082 -t 120 -p thread_pool_min=50 -p thread_pool_max=1000 -p thread_pool_timeout=120 -i varnish -s malloc,1G
-  volumes:
-    - ./conf/varnish:/etc/varnish
-    - /var/lib/varnish
-  net: host
-hitch:
-  image: lewispeckover/hitch:latest
-  command: --config=/etc/hitch/conf/hitch.conf
-  volumes:
-    - ./conf/hitch:/etc/hitch/conf
-  net: host
-varnishncsa:
-  image: lewispeckover/varnish:latest
-  command: /usr/bin/varnishncsa -a -n varnish
-  log_driver: syslog
-  volumes:
-    - /dev/log:/dev/log
-  volumes_from: 
-    - varnish
+version: '2'
+services:
+  varnish:
+    image: lewispeckover/varnish:latest
+    command: -F -a :80 -a 127.0.0.1:81,PROXY -f /etc/varnish/default.vcl -T 127.0.0.1:6082 -t 120 -p thread_pool_min=50 -p thread_pool_max=1000 -p thread_pool_timeout=120 -i varnish -s malloc,1G
+    volumes:
+      - ./conf/varnish:/etc/varnish
+      - /var/lib/varnish
+    ports:
+      - "80:80"
+  hitch:
+    image: lewispeckover/hitch:latest
+    command: --config=/etc/hitch/conf/hitch.conf
+    volumes:
+      - ./conf/hitch:/etc/hitch/conf
+    ports:
+      - "443:443"
+    networks:
+      - web
+  varnishncsa:
+    image: lewispeckover/varnish:latest
+    command: /usr/bin/varnishncsa -a -n varnish
+    log_driver: syslog
+    volumes:
+      - /dev/log:/dev/log
+    volumes_from: 
+       - varnish
+networks:
+  web:
+    external: true
