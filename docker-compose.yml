@@ -29,6 +29,6 @@ services:
 networks:
   default:
     external:
-      name: null
+      name: "null"
   web:
     external: true
