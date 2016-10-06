@@ -1,3 +1,9 @@
+sub vcl_recv {
+	if (false) {
+		call require_ssl;
+		call url_shift;
+	}
+}
 # call anywhere to enforce https
 sub require_ssl {
 	if (req.http.X-Forwarded-Proto != "https") {
