@@ -60,18 +60,3 @@ sub vcl_hash {
 		hash_data(req.http.X-Forwarded-Proto);
 	}
 }
-
-sub require_ssl {
-	# this helper function can be called anywhere to enforce https
-	if (req.http.X-Forwarded-Proto != "https") {
-		if (req.http.X-Backend-Host) {
-			return (synth(751, "https://" + req.http.X-Backend-Host + req.url));
-		}
-		return (synth(751, "https://" + req.http.host + req.url));
-	}
-}
-
-sub url_shift {
-	# remove the first path component
-	set req.url = regsub(req.url, "^/[^/]*/", "/");
-}
