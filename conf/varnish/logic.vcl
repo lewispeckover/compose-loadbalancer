@@ -11,7 +11,7 @@ sub vcl_recv {
 	}
 
 	# tell applications  if this was an https request (identified by server port)
-        if (server.port == 81) {
+        if (std.port(server.ip) == 81) {
                 set req.http.X-Forwarded-Proto = "https";
         }
 
