@@ -8,6 +8,8 @@ services:
       - /var/lib/varnish
     ports:
       - "80:80"
+    networks:
+      - web
   hitch:
     image: lewispeckover/hitch:latest
     command: --config=/etc/hitch/conf/hitch.conf
