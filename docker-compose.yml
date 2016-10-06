@@ -20,7 +20,8 @@ services:
   varnishncsa:
     image: lewispeckover/varnish:latest
     command: /usr/bin/varnishncsa -a -n varnish
-    log_driver: syslog
+    logging:
+      driver: syslog
     volumes:
       - /dev/log:/dev/log
     volumes_from: 
