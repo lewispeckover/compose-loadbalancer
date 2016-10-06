@@ -12,7 +12,7 @@ hitch:
     - ./conf/hitch:/etc/hitch/conf
   net: host
 varnishncsa:
-        image: lewispeckover/varnish:latest
+  image: lewispeckover/varnish:latest
   command: /usr/bin/varnishncsa -a -n varnish
   log_driver: syslog
   volumes:
