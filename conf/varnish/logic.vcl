@@ -1,7 +1,7 @@
 
 sub vcl_recv {
 	# limit our request methods because we're paranoid
-	if (req.method !~ "^(GET|HEAD|PATCH|POST|DELETE|PUT|PURGE)$")
+	if (req.method !~ "^(GET|HEAD|PATCH|POST|DELETE|PUT|PURGE)$") {
 		return (synth(405, "Method Not Allowed"));
 	}
 	
