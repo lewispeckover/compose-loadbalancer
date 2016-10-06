@@ -27,5 +27,8 @@ services:
     volumes_from: 
        - varnish
 networks:
+  default:
+    external:
+      name: null
   web:
     external: true
